@@ -6,4 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Kdyby\\Autowired' => array($vendorDir . '/kdyby/autowired/src'),
 );

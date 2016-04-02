@@ -18,6 +18,8 @@ application:
 session:
 	expiration: 14 days
 
+includes:
+	- factories.neon
 
 services:
 	- App\Model\UserManager

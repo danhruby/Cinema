@@ -2,6 +2,7 @@
 
 namespace App\Presenters;
 
+use Kdyby\Autowired\AutowireComponentFactories;
 use Nette;
 use App\Model;
 
@@ -11,5 +12,5 @@ use App\Model;
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
-
+    use AutowireComponentFactories;
 }

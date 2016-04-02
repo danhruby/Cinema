@@ -6,6 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Kdyby\\Autowired\\Exception' => $vendorDir . '/kdyby/autowired/src/Kdyby/Autowired/exceptions.php',
+    'Kdyby\\Autowired\\InvalidArgumentException' => $vendorDir . '/kdyby/autowired/src/Kdyby/Autowired/exceptions.php',
+    'Kdyby\\Autowired\\InvalidStateException' => $vendorDir . '/kdyby/autowired/src/Kdyby/Autowired/exceptions.php',
+    'Kdyby\\Autowired\\MemberAccessException' => $vendorDir . '/kdyby/autowired/src/Kdyby/Autowired/exceptions.php',
+    'Kdyby\\Autowired\\MissingClassException' => $vendorDir . '/kdyby/autowired/src/Kdyby/Autowired/exceptions.php',
+    'Kdyby\\Autowired\\MissingServiceException' => $vendorDir . '/kdyby/autowired/src/Kdyby/Autowired/exceptions.php',
+    'Kdyby\\Autowired\\UnexpectedValueException' => $vendorDir . '/kdyby/autowired/src/Kdyby/Autowired/exceptions.php',
     'Latte\\CompileException' => $vendorDir . '/latte/latte/src/Latte/exceptions.php',
     'Latte\\Compiler' => $vendorDir . '/latte/latte/src/Latte/Compiler.php',
     'Latte\\Engine' => $vendorDir . '/latte/latte/src/Latte/Engine.php',
