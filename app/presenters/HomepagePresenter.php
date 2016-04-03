@@ -22,8 +22,27 @@ class HomepagePresenter extends BasePresenter
 
 	public function renderDefault()
 	{
-		
+		/*if(!$this->isAjax())
+		{*/
+			$this->template->program = $this->screeningFacade->getScreeningsByDay(new DateTime('today'));
+		/*}*/
 	}
+
+	public function handleChangeProgram()
+	{
+		$this->template->program = $this->screeningFacade->getScreeningsByDay(new DateTime("03/27/2016"));
+		if ($this->isAjax()) {
+			$this->redrawControl('progr');
+		}
+	}
+
+	/*public function handleChangeVariable()
+	{
+		$this->template->anyVariable = 'changed value via ajax';
+		if ($this->isAjax()) {
+			$this->redrawControl('ajaxChange');
+		}
+	}*/
 
 	/**
 	 * @param IProgramFactory $programFactory
@@ -32,9 +51,14 @@ class HomepagePresenter extends BasePresenter
 	protected function createComponentProgram(IProgramFactory $programFactory)
 	{
 		$program = $programFactory->create($this->getParameter('id'));
-		$program->onSuccess[] = function ()
+		$program->onSuccess[] = function ($day)
 		{
-			$this->redirect('Home:default');
+			if($this->isAjax())
+			{
+				$this->template->program = $this->screeningFacade->getScreeningsByDay($day);
+				$this->redrawControl("progr");
+
+			}
 		};
 		return $program;
 	}

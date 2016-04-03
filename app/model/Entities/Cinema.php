@@ -45,5 +45,4 @@ class Cinema extends BaseEntity
 	 */
 	protected $city;
 
-
 }

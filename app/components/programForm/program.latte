@@ -1,4 +1,13 @@
 <h2>Program</h2>
-<div class="panel-body">
-	{control program}
+{form program}
+<div id="sandbox-container" class="ajax">
+	{input time}
+	{input cinema}
+	{input find}
 </div>
+{/form}
+<script>
+$('#sandbox-container #datepicker').datepicker({
+    autoclose: true
+});
+</script>

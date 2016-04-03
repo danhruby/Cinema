@@ -1,8 +1,9 @@
 <?php
 namespace App\Model\Facades;
 
-use App\Model\Entities\User,
+use App\Model\Entities\Screening,
 	Kdyby\Doctrine\EntityManager,
+	Nette\Utils\DateTime,
 	Nette\Object;
 
 
@@ -28,8 +29,24 @@ class ScreeningFacade extends Object
 	 * @param datetime day
 	 * @return array
 	 */
-	public function getScreeningsByDay($day)
+	public function getScreeningsByDay($from)
 	{
-		return array("1" => 1);
+		$to = clone $from;
+
+		$r_screening = $this->em->getRepository(Screening::getClassName());
+		$screenings = $r_screening->createQueryBuilder("s")
+			->join('s.movie', 'm')
+			->where('s.time BETWEEN :from AND :to')->setParameter('from', $from)->setParameter('to', $to->modify('+1 day'))
+			->getQuery()
+			->execute();
+
+		$program = array();
+		foreach($screenings as $screening)
+		{
+			$program[$screening->movie->id]['title'] = $screening->movie->title;
+			$program[$screening->movie->id][$screening->time->format('G')] = $screening->time->format('H:i');
+		}
+
+		return $program;
 	}
 }

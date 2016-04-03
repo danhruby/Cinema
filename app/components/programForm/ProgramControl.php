@@ -2,7 +2,10 @@
 
 namespace App\Components\Program;
 
-use Nette\Application\UI;
+use App\Model\Entities\Cinema,
+	Nette\Application\UI,
+	App\Model\Facades\ScreeningFacade,
+	Kdyby\Doctrine\EntityManager;
 
 /**
  * Class ProgramControl
@@ -16,9 +19,15 @@ class ProgramControl extends UI\Control
 	public $onSuccess = [];
 
 	/**
-	 * @var Orm
+	 * @var EntityManager
 	 */
-	private $orm;
+	private $em;
+
+	/**
+	 * @var ScreeningFacade
+	 * @inject
+	 */
+	public $screeningFacade;
 
 	/**
 	 * @var int
@@ -28,11 +37,13 @@ class ProgramControl extends UI\Control
 	/**
 	 * ProgramControl constructor.
 	 * @param int|null $id
+	 * @param EntityManager $em
 	 */
-	public function __construct($id)
+	public function __construct($id, EntityManager $em)
 	{
 		parent::__construct();
 		$this->id = $id;
+		$this->em = $em;
 	}
 
 	public function render()
@@ -47,32 +58,42 @@ class ProgramControl extends UI\Control
 	protected function createComponentProgram()
 	{
 		$form = new UI\Form;
-		$form->addText('name', 'Name:');
-		$form->addSubmit('save', 'Save');
-		$form->onSuccess[] = function (UI\Form $form)
+		$form->getElementPrototype()->class('ajax');
+		$form->addText('time', 'Time:')
+			->setAttribute('id', 'datepicker')
+			->setAttribute('class', 'form-control')
+			->setAttribute('placeholder', 'Select day');
+		$form->addSelect('cinema', "Kino: ", $this->getCinemas())
+			->setAttribute('class', 'form-control');
+		$form->addSubmit('find', 'Vyhledat');
+		/*$form->onSuccess[] = function (UI\Form $form)
 		{
 			$this->process($form);
-		};
+		};*/
 
 		return $form;
 	}
 
-	/**
+	/*/**
 	 * @param UI\Form $form
 	 */
-	protected function process(UI\Form $form)
+	/*protected function process(UI\Form $form)
 	{
-		$values = $form->getValues();
+		$values = $form->getHttpData();
 
-		if(is_null($this->id))
+		$this->onSuccess(new DateTime($values['time']));
+	}*/
+
+	protected function getCinemas()
+	{
+		$r_cinemas = $this->em->getRepository(Cinema::getClassName());
+
+		$cinemas = array();
+		foreach($r_cinemas->findAll() as $cinema)
 		{
-			$this->presenter->flashMessage('Program was successfully saved.');
-		}
-		else
-		{
-			$this->presenter->flashMessage("Program was successfully changed.");
+			$cinemas[$cinema->id] = $cinema->name;
 		}
 
-		$this->onSuccess();
+		return $cinemas;
 	}
 }
