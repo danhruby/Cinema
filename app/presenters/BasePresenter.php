@@ -2,9 +2,10 @@
 
 namespace App\Presenters;
 
-use Kdyby\Autowired\AutowireComponentFactories;
-use Nette;
-use App\Model;
+use Kdyby\Autowired\AutowireComponentFactories,
+    Nette,
+    App\Model,
+    Kdyby\Doctrine\EntityManager;
 
 
 /**
@@ -12,5 +13,11 @@ use App\Model;
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
+    /**
+     * @var EntityManager
+     * @inject
+     */
+    public $em;
+
     use AutowireComponentFactories;
 }

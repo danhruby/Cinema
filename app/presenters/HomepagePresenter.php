@@ -5,15 +5,24 @@ namespace App\Presenters;
 use Nette,
 	App\Model,
 	App\Components\Program\IProgramFactory,
-	App\Components\Program\ProgramControl;
+	App\Components\Program\ProgramControl,
+	App\Model\Entities\Screening,
+	App\Model\Entities\Movie,
+	Nette\Utils\DateTime,
+	App\Model\Facades\ScreeningFacade;
 
 
 class HomepagePresenter extends BasePresenter
 {
+	/**
+	 * @var ScreeningFacade
+	 * @inject
+	 */
+	public $screeningFacade;
 
 	public function renderDefault()
 	{
-		$this->template->anyVariable = 'any value';
+		
 	}
 
 	/**

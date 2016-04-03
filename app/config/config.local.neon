@@ -1,9 +1,9 @@
 parameters:
 
 
-database:
-	dsn: 'mysql:host=127.0.0.1;dbname=test'
-	user:
-	password:
-	options:
-		lazy: yes
+doctrine:
+    user: root
+    password: root
+    dbname: cinema
+    metadata:
+        App: %appDir%
