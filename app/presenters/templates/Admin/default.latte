@@ -2,7 +2,7 @@
 <div class="container">
     <div class="row">
     	<h1>Movies</h1>
-		<a href="{link Admin:add}" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-plus"></i> Add movie</a>
+		<a href="{link Admin:addMovie}" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-plus"></i> Add movie</a>
 		<table class="table table-striped">
         	<thead>
         		<th>Title</th><th>Length</th><th></th>
@@ -12,8 +12,8 @@
         			<tr>
         				<td>{$movie->title}</td>
         				<td>{$movie->length}</td>
-        				<td>
-        					<a href="{link Admin:edit $movie->id}" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-pencil"></i></a>
+        				<td class="text-right">
+        					<a href="{link Admin:editMovie $movie->id}" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-pencil"></i></a>
         					<a href="{link deleteMovie! $movie->id}" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
         				</td>
         			</tr>
@@ -21,7 +21,7 @@
         	</tbody>
         </table>
         <h1>Screening</h1>
-		<a href="" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-plus"></i> Add screening</a>
+		<a href="{link Admin:addScreening}" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-plus"></i> Add screening</a>
 		<table class="table table-striped">
 			<thead>
 				<th>Movie</th><th>Time</th><th>Length</th><th>Cinema</th><th>Room</th><th>Price</th><th></th>
@@ -35,9 +35,9 @@
 						<td>{$screening->room->cinema->name}</td>
 						<td>{$screening->room->name}</td>
 						<td>{$screening->price}</td>
-						<td>
-							<a href="" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-pencil"></i></a>
-							<a href="" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+						<td class="text-right">
+							<a href="{link Admin:editScreening $screening->id}" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-pencil"></i></a>
+							<a href="{link deleteScreening! $screening->id}" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
 						</td>
 					</tr>
 				{/foreach}

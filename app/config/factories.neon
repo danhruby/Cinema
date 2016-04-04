@@ -1,3 +1,4 @@
 services:
 	- App\Components\Program\IProgramFactory
 	- App\Components\Movie\IMovieFactory
+	- App\Components\Screening\IScreeningFactory

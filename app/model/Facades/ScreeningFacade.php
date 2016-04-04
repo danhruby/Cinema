@@ -44,7 +44,7 @@ class ScreeningFacade extends Object
 		foreach($screenings as $screening)
 		{
 			$program[$screening->movie->id]['title'] = $screening->movie->title;
-			$program[$screening->movie->id][$screening->time->format('G')] = $screening->time->format('H:i');
+			$program[$screening->movie->id][$screening->time->format('G')] = $screening;
 		}
 
 		return $program;

@@ -2,6 +2,7 @@
 
 namespace App\Presenters;
 
+use App\Components\Screening\IScreeningFactory;
 use App\Model\Entities\Movie,
 	App\Model\Entities\Screening,
 	Nette,
@@ -15,11 +16,20 @@ class AdminPresenter extends BasePresenter
 		$r_movies = $this->em->getRepository(Movie::getClassName());
 		$movie = $r_movies->find($id);
 
+		$movie->removeGenres();
+		$this->em->persist($movie);
+		$this->em->flush();
+
 		$this->em->remove($movie);
 		$this->em->flush();
 		$this->flashMessage('Film byl vymazán.');
 
 		$this->redirect('Admin:default');
+	}
+
+	public function handleDeleteScreening($id)
+	{
+
 	}
 
 	public function renderDefault()
@@ -31,7 +41,11 @@ class AdminPresenter extends BasePresenter
 		$this->template->screenings = $r_screenings->findAll();
 	}
 
-	public function renderEdit($id)
+	public function renderEditMovie($id)
+	{
+	}
+
+	public function renderEditScreening($id)
 	{
 	}
 
@@ -47,5 +61,19 @@ class AdminPresenter extends BasePresenter
 			$this->redirect("Admin:default");
 		};
 		return $movie;
+	}
+
+	/**
+	 * @param IScreeningFactory $screeningFactory
+	 * @return ScreeningControl
+	 */
+	protected function createComponentScreening(IScreeningFactory $screeningFactory)
+	{
+		$screening = $screeningFactory->create($this->getParameter('id'));
+		$screening->onSuccess[] = function ()
+		{
+			$this->redirect("Admin:default");
+		};
+		return $screening;
 	}
 }

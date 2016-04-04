@@ -1,8 +1,35 @@
+html,
 body {
 	font-size: 15px;
 	line-height: 1.6;
 	color: #333;
 	background: white;
+	height: 100%;
+	margin-bottom: 0px;
+}
+
+* {
+	margin: 0;
+}
+
+.page-wrap {
+	min-height: 100%;
+	/* equal to footer height */
+	margin-bottom: -40px;
+}
+
+.page-wrap:after {
+	content: "";
+	display: block;
+}
+footer, .page-wrap:after {
+	/* .push must be the same height as footer */
+	height: 40px;
+}
+footer {
+	background: #4d4d4d;
+	color: #ffffff;
+	padding-top: 7px;
 }
 
 h1 {
@@ -47,4 +74,27 @@ form .required label {
 form .error {
 	color: #D00;
 	font-weight: bold;
+}
+
+table tbody tr td span{
+	position: relative;
+}
+
+table tbody tr td span:hover div.pop-up{
+	display: block;
+}
+
+div.pop-up {
+	display: none;
+	position: absolute;
+	left: -28px;
+	top: -80px;
+	width: 200px;
+	padding: 10px;
+	margin-top: 5px;
+	background: #eeeeee;
+	color: #000000;
+	border-radius: 5px;
+	font-size: 70%;
+	z-index: 999;
 }

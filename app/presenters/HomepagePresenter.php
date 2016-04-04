@@ -22,10 +22,7 @@ class HomepagePresenter extends BasePresenter
 
 	public function renderDefault()
 	{
-		/*if(!$this->isAjax())
-		{*/
 			$this->template->program = $this->screeningFacade->getScreeningsByDay(new DateTime('today'));
-		/*}*/
 	}
 
 	public function handleChangeProgram()

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Components\Movie;
+namespace App\Components\Screening;
 
 use App\Model\Entities\Genre;
-use App\Model\Entities\Movie,
+use App\Model\Entities\Screening,
 	Nette\Application\UI,
 	Doctrine\ORM\EntityManager;
 
 /**
- * Class MovieControl
+ * Class ScreeningControl
  */
-class MovieControl extends UI\Control
+class ScreeningControl extends UI\Control
 {
 
 	/**
@@ -29,7 +29,7 @@ class MovieControl extends UI\Control
 	private $id;
 
 	/**
-	 * MovieControl constructor.
+	 * ScreeningControl constructor.
 	 * @param int|null $id
 	 * @param EntityManager $em
 	 */
@@ -44,22 +44,22 @@ class MovieControl extends UI\Control
 	{
 		if(!is_null($this->id))
 		{
-			$r_movie = $this->em->getRepository(Movie::getClassName());
-			$movie = $r_movie->find($this->id);
+			$r_screening = $this->em->getRepository(Screening::getClassName());
+			$screening = $r_screening->find($this->id);
 
-			$this['movie']['title']->setValue($movie->title);
-			$this['movie']['length']->setValue($movie->length);
-			$this['movie']['genres']->setDefaultValue($movie->getGenresId());
+			$this['screening']['title']->setValue($screening->title);
+			$this['screening']['length']->setValue($screening->length);
+			$this['screening']['genres']->setDefaultValue($screening->getGenresId());
 		}
 
-		$this->template->setFile(__DIR__ . '/movie.latte');
+		$this->template->setFile(__DIR__ . '/screening.latte');
 		$this->template->render();
 	}
 
 	/**
 	 * @return UI\Form
 	 */
-	protected function createComponentMovie()
+	protected function createComponentScreening()
 	{
 		$form = new UI\Form;
 		$form->addText('title', 'Název:')
@@ -88,29 +88,29 @@ class MovieControl extends UI\Control
 		$r_genre = $this->em->getRepository(Genre::getClassName());
 		if(is_null($this->id))
 		{
-			$movie = new Movie();
+			$screening = new Screening();
 			$this->flashMessage("Film byl uložen.");
 		}
 		else
 		{
-			$r_movie = $this->em->getRepository(Movie::getClassName());
-			$movie = $r_movie->find($this->id);
+			$r_screening = $this->em->getRepository(Screening::getClassName());
+			$screening = $r_screening->find($this->id);
 			$this->flashMessage("Film byl změněn.");
 		}
 
-		$movie->title = $values['title'];
-		$movie->length = $values['length'];
+		$screening->title = $values['title'];
+		$screening->length = $values['length'];
 
-		$movie->removeGenres();
+		$screening->removeGenres();
 		foreach($values['genres'] as $genre)
 		{
-			$movie->addToGenres($r_genre->find($genre));
+			$screening->addToGenres($r_genre->find($genre));
 		}
 
-		$this->em->persist($movie);
+		$this->em->persist($screening);
 		$this->em->flush();
 
-		$this->saveGenres($movie->getId(), $values['genres']);
+		$this->saveGenres($screening->getId(), $values['genres']);
 
 		$this->onSuccess();
 
@@ -128,7 +128,7 @@ class MovieControl extends UI\Control
 		return $genres;
 	}
 
-	private function saveGenres($movie_id, $genres)
+	private function saveGenres($screening_id, $genres)
 	{
 		foreach($genres as $genre)
 		{

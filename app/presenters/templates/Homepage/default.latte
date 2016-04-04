@@ -21,7 +21,16 @@
                                 {for $i = 10; $i <= 24; $i++}
                                     <td>
                                         {if isset($program[$id][$i])}
-                                            <a href="" title="Odkaz na rezervační system">{$program[$id][$i]}</a>
+                                        <span>
+                                            <div class="pop-up">
+                                                 <p>
+                                                    Délka: {$program[$id][$i]->movie->length}<br>
+                                                    Cena: {$program[$id][$i]->price}<br>
+                                                    Žánry: {foreach $program[$id][$i]->movie->genres as $genre}{$genre->name}{if !$iterator->last} / {/if}{/foreach}
+                                                 </p>
+                                            </div>
+                                            <a href="" class="trigger">{$program[$id][$i]->time|date:'%H:%M'}</a>
+                                        </span>
                                         {/if}
                                     </td>
                                 {/for}

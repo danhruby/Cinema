@@ -2,6 +2,8 @@
 
 namespace App\Model\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM,
 	Kdyby\Doctrine\Entities\BaseEntity;
 
@@ -45,4 +47,38 @@ class Movie extends BaseEntity
 	 * @ORM\OneToMany(targetEntity="Screening", mappedBy="movie")
 	 */
 	protected $screenings;
+
+	/**
+	 * Movie constructor.
+	 */
+	public function __construct()
+	{
+		$this->genres = new ArrayCollection();
+	}
+
+	public function removeGenres()
+	{
+		$this->genres = new ArrayCollection();
+	}
+
+	public function addToGenres(Genre $genre)
+	{
+		if (!$this->genres->contains($genre)) {
+			$genre->addToMovie($this);
+			$this->genres[] = $genre;
+		}
+	}
+
+	public function getGenresId()
+	{
+		$genres = array();
+		foreach($this->genres->toArray() as $genre)
+		{
+			$genres[] = $genre->id;
+		}
+
+		return $genres;
+	}
+
+
 }

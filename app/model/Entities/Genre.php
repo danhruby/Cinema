@@ -28,4 +28,17 @@ class Genre extends BaseEntity
 	 * @ORM\ManyToMany(targetEntity="Movie", mappedBy="genres")
 	 */
 	protected $movies;
+
+	/**
+	 * Genre constructor.
+	 */
+	public function __construct()
+	{
+		$this->movies = new ArrayCollection();
+	}
+
+	public function addToMovie(Movie $movie)
+	{
+		$this->movies[] = $movie;
+	}
 }
